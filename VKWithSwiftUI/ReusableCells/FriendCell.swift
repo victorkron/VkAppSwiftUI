@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct FriendCell: View {
+    
+    let name: String
+    let avatar: String
+    
     var body: some View {
         HStack {
             AvatarOfCell {
-                Image("friend")
+                Image(avatar)
             }
 //            .alignmentGuide(VerticalAlignment.center) { $0[.bottom] }
 //            .alignmentGuide(HorizontalAlignment.center) { $0[.trailing] }
             
-            Text("John Wick")
+            Text(name)
                 .font(.title)
                 .padding(.leading, 20)
                 .lineLimit(1)
@@ -29,6 +33,6 @@ struct FriendCell: View {
 
 struct FriendsCell_Previews: PreviewProvider {
     static var previews: some View {
-        FriendCell()
+        FriendCell(name: "John Wick", avatar: "friend")
     }
 }

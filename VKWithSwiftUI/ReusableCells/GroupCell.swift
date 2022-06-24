@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct GroupCell: View {
+    
+    let name: String
+    let avatar: String
+    
     var body: some View {
         HStack {
             AvatarOfCell {
-                Image("group")
+                Image(avatar)
             }
-            Text("Promissory")
+            Text(name)
                 .font(.title)
                 .padding(.leading, 20)
                 .lineLimit(1)
@@ -25,6 +29,6 @@ struct GroupCell: View {
 
 struct GroupCell_Previews: PreviewProvider {
     static var previews: some View {
-        GroupCell()
+        GroupCell(name: "name", avatar: "group")
     }
 }

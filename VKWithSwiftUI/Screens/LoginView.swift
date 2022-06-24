@@ -8,11 +8,16 @@
 import SwiftUI
 import Combine
 
-struct ContentView: View {
+struct LoginView: View {
+    
+    @Binding var isUserLoggedIn: Bool
+    
     @State private var login = ""
     @State private var password = ""
     @State private var shouldShowLogo: Bool = true
     @State private var currentBackground: Int = 0
+    
+    @State private var showIncorrentCredentialsWarning = false
     
     private let backgrounds: [String] = ["light mode", "dark mode"]
     
@@ -24,6 +29,17 @@ struct ContentView: View {
             .map { _ in false }
     )
         .removeDuplicates()
+    
+    
+    private func verifyLoginData() {
+        if login == "" && password == "" {
+            isUserLoggedIn = true
+        } else {
+            showIncorrentCredentialsWarning = true
+        }
+        
+        password = ""
+    }
     
     
     var body: some View {
@@ -83,7 +99,7 @@ struct ContentView: View {
                     
                     HStack {
                         Button {
-                            print("Log in button pressed")
+                            self.verifyLoginData()
                         } label: {
                             Label("Log in ", image: "")
                                 .foregroundColor(Color.white)
@@ -143,9 +159,19 @@ struct ContentView: View {
             }
             .padding()
             .font(.title)
-        }.onTapGesture {
+        }
+        .autocapitalization(.none)
+        .alert(isPresented: self.$showIncorrentCredentialsWarning, content: {
+            Alert(
+                title: Text("Incorrect credentials"),
+                message: Text("Incorrect password or login"),
+                dismissButton: .cancel()
+            )
+        })
+        .onTapGesture {
             UIApplication.shared.endEditing()
         }
+        
     }
 }
 
@@ -155,8 +181,8 @@ extension UIApplication {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
