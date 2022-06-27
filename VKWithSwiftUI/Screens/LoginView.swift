@@ -10,7 +10,7 @@ import Combine
 
 struct LoginView: View {
     
-    @Binding var isUserLoggedIn: Bool
+    @Binding var isUserLoggedIn: Bool 
     
     @State private var login = ""
     @State private var password = ""

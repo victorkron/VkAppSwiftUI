@@ -15,15 +15,21 @@ struct TabBar: View {
     
     var body: some View {
         TabView(selection: $selectionView) {
-            FriendsView()
-                .tabItem {
-                    Image(systemName: "person.3.sequence")
-                }.tag(1)
-            GroupsView()
-                .tabItem {
-                    Image(systemName: "rectangle.3.group")
-                }.tag(2)
-        }.navigationTitle(navTitleName[selectionView - 1])
+            VStack {
+                FriendsView(viewModel: FriendViewModel())
+            }.tabItem {
+                Image(systemName: "person.3.sequence")
+            }.tag(1)
+            
+            VStack {
+                GroupsView(viewModel: GroupViewModel())
+            }.tabItem {
+                Image(systemName: "rectangle.3.group")
+            }.tag(2)
+            
+                
+        }
+        .navigationTitle(navTitleName[selectionView - 1])
     }
 }
 

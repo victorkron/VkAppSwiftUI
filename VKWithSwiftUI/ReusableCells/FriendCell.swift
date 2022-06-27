@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FriendCell: View {
     
@@ -15,7 +16,7 @@ struct FriendCell: View {
     var body: some View {
         HStack {
             AvatarOfCell {
-                Image(avatar)
+                KFImage(URL(string: avatar))
             }
 //            .alignmentGuide(VerticalAlignment.center) { $0[.bottom] }
 //            .alignmentGuide(HorizontalAlignment.center) { $0[.trailing] }

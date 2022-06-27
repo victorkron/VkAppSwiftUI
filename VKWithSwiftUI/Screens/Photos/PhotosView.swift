@@ -6,25 +6,20 @@
 //
 
 import SwiftUI
-import ASCollectionView
+import Kingfisher
 
 struct PhotosView: View {
     
     private let rows: [GridItem]
     private var size: CGFloat = 80
+    var id: Int
     
-    @State var photos = [
-        Photo(imageName: "friend"),
-        Photo(imageName: "friend"),
-        Photo(imageName: "friend"),
-        Photo(imageName: "friend"),
-        Photo(imageName: "friend"),
-        Photo(imageName: "friend"),
-        Photo(imageName: "friend"),
-        Photo(imageName: "friend")
-    ]
+    @ObservedObject var viewModel: PhotoViewModel
     
-    init() {
+    
+    init(viewModel: PhotoViewModel, id: Int) {
+        self.id = id
+        self.viewModel = viewModel
         rows = [
             GridItem(.fixed(self.size)),
             GridItem(.fixed(self.size)),
@@ -36,8 +31,8 @@ struct PhotosView: View {
         GeometryReader { geometry in
             ScrollView(.horizontal) {
                 LazyHGrid(rows: rows) {
-                    ForEach(0..<photos.count, id: \.self) { index in
-                        Image(photos[index].imageName) // заглушка прототипа будующей фотографии
+                    ForEach(0..<viewModel.photos.count, id: \.self) { index in
+                        KFImage(URL(string: viewModel.photos[index].imageName))
                             .resizable()
                             .frame(width: size, height: size)
                             .cornerRadius(size / 2)
@@ -49,29 +44,15 @@ struct PhotosView: View {
                     width: geometry.size.width,
                     height: geometry.size.height
                 )
+                .onAppear(perform: viewModel.fetch)
             }
-            
         }
     }
-
-        
-//        ASCollectionView(data: photos) { photo, context in
-//            AvatarOfCell {
-//                Image(photo.imageName)
-//            }
-//        }.layout {
-//            .grid(
-//                layoutMode: .fixedNumberOfColumns(2),
-//                itemSpacing: 0,
-//                lineSpacing: 16
-//            )
-//
-//        }
 }
 
 
 struct PhotosView_Previews: PreviewProvider {
     static var previews: some View {
-        PhotosView()
+        PhotosView(viewModel: PhotoViewModel(id: 0), id: 1)
     }
 }

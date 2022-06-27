@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct GroupCell: View {
     
@@ -15,7 +16,7 @@ struct GroupCell: View {
     var body: some View {
         HStack {
             AvatarOfCell {
-                Image(avatar)
+                KFImage(URL(string: avatar))
             }
             Text(name)
                 .font(.title)

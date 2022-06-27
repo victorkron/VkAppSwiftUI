@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct AvatarOfCell: View {
-    var content: Image
+    var content: KFImage
     private var size = 70.0 
     
-    init(@ViewBuilder content: () -> Image) {
+    init(@ViewBuilder content: () -> KFImage) {
         self.content = content()
     }
     
